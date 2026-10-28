@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WGP15 Controller Companion | Fantech EOS Pro</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="brand-group">
+        <div class="brand-badge">WGP15</div>
+        <div class="brand-text">
+          <h1>EOS PRO COMPANION</h1>
+          <p class="brand-sub">Hardware Analyzer & Tactical Profiler (FW v1.5 / ZXD2055)</p>
+        </div>
+      </div>
+      <div class="header-status">
+        <div class="status-indicator" id="statusPill">
+          <span class="status-dot"></span>
+          <span class="status-label" id="statusText">Menunggu Gamepad...</span>
+        </div>
+        <div class="device-pill" id="deviceName">Tidak ada perangkat aktif</div>
+      </div>
+    </header>
+
+    <!-- Main Bento Grid -->
+    <main class="bento-grid">
+      <!-- Card 1: Interactive Gamepad Visualizer -->
+      <section class="bento-card visualizer-card">
+        <div class="card-header">
+          <div class="card-title">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="4"/><circle cx="8" cy="12" r="1.5"/><circle cx="16" cy="10" r="1"/><circle cx="18" cy="12" r="1"/><circle cx="16" cy="14" r="1"/><circle cx="14" cy="12" r="1"/></svg>
+            <span>Live Controller Visualizer</span>
+          </div>
+          <span class="badge-accent">Asymmetric Xbox Layout</span>
+        </div>
+
+        <div class="visualizer-wrapper">
+          <div class="gamepad-body">
+            <!-- Pundak & Trigger -->
+            <div class="shoulder-row">
+              <div class="shoulder-group left">
+                <div class="bumper-btn" id="btn-lb">LB</div>
+                <div class="trigger-container">
+                  <div class="trigger-bar" id="bar-lt"></div>
+                  <span class="trigger-label">LT <span id="val-lt">0.00</span></span>
+                </div>
+              </div>
+              <div class="shoulder-group right">
+                <div class="trigger-container">
+                  <div class="trigger-bar" id="bar-rt"></div>
+                  <span class="trigger-label">RT <span id="val-rt">0.00</span></span>
+                </div>
+                <div class="bumper-btn" id="btn-rb">RB</div>
+              </div>
+            </div>
+
+            <!-- Area Tengah / Sticks & Buttons -->
+            <div class="face-layout">
+              <!-- Kiri: Stick Kiri (Atas) & D-Pad (Bawah) -->
+              <div class="face-left">
+                <div class="stick-well" id="well-lstick">
+                  <div class="stick-thumb" id="thumb-lstick">L3</div>
+                </div>
+                <div class="dpad-cross" id="dpad-group">
+                  <div class="dpad-btn up" id="btn-du">▲</div>
+                  <div class="dpad-btn left" id="btn-dl">◀</div>
+                  <div class="dpad-center"></div>
+                  <div class="dpad-btn right" id="btn-dr">▶</div>
+                  <div class="dpad-btn down" id="btn-dd">▼</div>
+                </div>
+              </div>
+
+              <!-- Tengah: Tombol Sistem & Logo -->
+              <div class="face-center">
+                <div class="sys-buttons">
+                  <div class="sys-btn" id="btn-back">VIEW</div>
+                  <div class="home-btn" id="btn-home">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3z"/></svg>
+                  </div>
+                  <div class="sys-btn" id="btn-start">MENU</div>
+                </div>
+                <div class="turbo-btn" id="btn-turbo">TURBO</div>
+                <div class="paddles-preview">
+                  <div class="paddle-badge" id="btn-m1">M1 (L)</div>
+                  <div class="paddle-badge" id="btn-m2">M2 (R)</div>
+                </div>
+              </div>
+
+              <!-- Kanan: Tombol ABXY (Atas) & Stick Kanan (Bawah) -->
+              <div class="face-right">
+                <div class="abxy-cluster">
+                  <div class="abxy-btn y" id="btn-y">Y</div>
+                  <div class="abxy-btn x" id="btn-x">X</div>
+                  <div class="abxy-btn b" id="btn-b">B</div>
+                  <div class="abxy-btn a" id="btn-a">A</div>
+                </div>
+                <div class="stick-well" id="well-rstick">
+                  <div class="stick-thumb" id="thumb-rstick">R3</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Card 2: Precision Circularity & Deadzone Benchmark -->
+      <section class="bento-card circularity-card">
+        <div class="card-header">
+          <div class="card-title">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 1 10 10"/><path d="M12 12L19 5"/></svg>
+            <span>Stick Circularity Benchmark (Hall-Effect)</span>
+          </div>
+          <button class="btn-sm" id="btnResetBenchmark">Reset Test</button>
+        </div>
+
+        <div class="radar-duo">
+          <!-- Radar Kiri -->
+          <div class="radar-unit">
+            <span class="radar-label">LEFT STICK</span>
+            <div class="canvas-box">
+              <canvas id="canvasLeftStick" width="180" height="180"></canvas>
+            </div>
+            <div class="radar-stats">
+              <div class="stat-row"><span>Coords (X, Y):</span><b id="lblLeftXY">0.00, 0.00</b></div>
+              <div class="stat-row"><span>Avg Error:</span><b id="lblLeftAvgErr" class="good">0.0%</b></div>
+              <div class="stat-row"><span>Max Error:</span><b id="lblLeftMaxErr">0.0%</b></div>
+            </div>
+          </div>
+
+          <!-- Radar Kanan -->
+          <div class="radar-unit">
+            <span class="radar-label">RIGHT STICK</span>
+            <div class="canvas-box">
+              <canvas id="canvasRightStick" width="180" height="180"></canvas>
+            </div>
+            <div class="radar-stats">
+              <div class="stat-row"><span>Coords (X, Y):</span><b id="lblRightXY">0.00, 0.00</b></div>
+              <div class="stat-row"><span>Avg Error:</span><b id="lblRightAvgErr" class="good">0.0%</b></div>
+              <div class="stat-row"><span>Max Error:</span><b id="lblRightMaxErr">0.0%</b></div>
+            </div>
+          </div>
+        </div>
+        <p class="card-hint">💡 Putar stik perlahan 360° mentok ke pinggir untuk memetakan error lingkaran.</p>
+      </section>
+
+      <!-- Card 3: Trigger Diagnostics & Hair-Trigger Lock -->
+      <section class="bento-card trigger-card">
+        <div class="card-header">
+          <div class="card-title">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+            <span>Trigger Lock & Rumble Diagnostics</span>
+          </div>
+        </div>
+
+        <div class="trigger-diag-grid">
+          <div class="diag-group">
+            <div class="diag-header">
+              <span>L2 / LT Travel</span>
+              <span class="mode-tag" id="tagLtMode">Linear (Full)</span>
+            </div>
+            <div class="gauge-bg">
+              <div class="gauge-fill" id="gaugeLt"></div>
+            </div>
+            <div class="gauge-num" id="numLt">0.0% (0.000)</div>
+          </div>
+
+          <div class="diag-group">
+            <div class="diag-header">
+              <span>R2 / RT Travel</span>
+              <span class="mode-tag" id="tagRtMode">Linear (Full)</span>
+            </div>
+            <div class="gauge-bg">
+              <div class="gauge-fill" id="gaugeRt"></div>
+            </div>
+            <div class="gauge-num" id="numRt">0.0% (0.000)</div>
+          </div>
+        </div>
+
+        <div class="rumble-box">
+          <span class="rumble-title">Dual-Rumble Motor Test:</span>
+          <div class="rumble-actions">
+            <button class="btn-rumble" onclick="triggerRumble(0.3, 0.3, 250)">Soft (30%)</button>
+            <button class="btn-rumble" onclick="triggerRumble(0.7, 0.7, 300)">Medium (70%)</button>
+            <button class="btn-rumble" onclick="triggerRumble(1.0, 1.0, 400)">Heavy (100%)</button>
+            <button class="btn-rumble pulse" onclick="triggerPulseRumble()">Pulse Wave</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Card 4: Game Profiles (Tekken 8 Tactical Mapping) -->
+      <section class="bento-card profile-card">
+        <div class="card-header">
+          <div class="card-title">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <span>Tactical Profile: Tekken 8 Setup</span>
+          </div>
+          <span class="badge-profile">Ranzzie Recommended</span>
+        </div>
+
+        <div class="profile-table-wrapper">
+          <table class="profile-table">
+            <thead>
+              <tr>
+                <th>Tombol WGP15</th>
+                <th>Notasi Tekken</th>
+                <th>Fungsi Input</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="kbd">M1 (Back Left)</span></td>
+                <td><span class="badge-combo">1 + 2</span> (LP + RP)</td>
+                <td>Throw Standar / Command Throw / Heat Burst</td>
+              </tr>
+              <tr>
+                <td><span class="kbd">M2 (Back Right)</span></td>
+                <td><span class="badge-combo">3 + 4</span> (LK + RK)</td>
+                <td>Stance Karakter / Lompat / Taunt</td>
+              </tr>
+              <tr>
+                <td><span class="kbd">L1 / LB</span></td>
+                <td><span class="badge-combo">1 + 4</span></td>
+                <td>Cross-Diagonal Punch-Kick</td>
+              </tr>
+              <tr>
+                <td><span class="kbd">L2 / LT (Locked)</span></td>
+                <td><span class="badge-combo">2 + 3</span></td>
+                <td>Heat Smash / Engage</td>
+              </tr>
+              <tr>
+                <td><span class="kbd">D-Pad Mangkok</span></td>
+                <td><span class="badge-tech">d, df, f / KBD</span></td>
+                <td>Diagonal Hadouken & Korean Backdash</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Card 5: WGP15 Hardware Combo Cheat-Sheet -->
+      <section class="bento-card cheatsheet-card">
+        <div class="card-header">
+          <div class="card-title">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            <span>WGP15 Onboard Hardware Cheat-Sheet (FW v1.5)</span>
+          </div>
+          <span class="badge-rom">No Software Needed</span>
+        </div>
+
+        <div class="cheatsheet-grid">
+          <div class="cheat-item">
+            <span class="cheat-combo">Turbo + M1 / M2</span>
+            <span class="cheat-action">Rekam tombol macro belakang (LED 2&3 kedip)</span>
+          </div>
+          <div class="cheat-item">
+            <span class="cheat-combo">Option (Tekan 2x)</span>
+            <span class="cheat-action">Tukar fungsi D-Pad dengan Analog Kiri</span>
+          </div>
+          <div class="cheat-item">
+            <span class="cheat-combo">Turbo + R3</span>
+            <span class="cheat-action">Tukar tata letak tombol XYAB ↔ YXBA</span>
+          </div>
+          <div class="cheat-item">
+            <span class="cheat-combo">Turbo + L3</span>
+            <span class="cheat-action">Ubah pola circularity stik: Radial ↔ Pinwheel</span>
+          </div>
+          <div class="cheat-item">
+            <span class="cheat-combo">+ + Turbo + Home</span>
+            <span class="cheat-action">Masuk Mode Kalibrasi Stik & Trigger (Keluar: -)</span>
+          </div>
+          <div class="cheat-item">
+            <span class="cheat-combo">Snapshot + LT / LB</span>
+            <span class="cheat-action">Aktifkan Gyroscope Motion di mode XInput (PC)</span>
+          </div>
+          <div class="cheat-item">
+            <span class="cheat-combo">+ + D-Pad Kanan</span>
+            <span class="cheat-action">Ganti mode lampu RGB (Breathing/Static/Off)</span>
+          </div>
+          <div class="cheat-item">
+            <span class="cheat-combo">Turbo + L-Stick ▲/▼</span>
+            <span class="cheat-action">Atur kekuatan getaran motor (100%-70%-30%-Off)</span>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="app-footer">
+      <span>WGP15 Controller Companion • Built for Ranzzie Lab • Native Gamepad API 60/120Hz</span>
+      <span>SoC: ZhiXu ZXD2055 • Firmware: v1.56 (20240320)</span>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

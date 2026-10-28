@@ -1,0 +1,16 @@
+services:
+  wgp15-companion:
+    build: .
+    container_name: wgp15-companion
+    restart: unless-stopped
+    ports:
+      - "${PORT:-8090}:8090"
+    environment:
+      - PORT=8090
+    # Uncomment jika menggunakan reverse proxy dengan network eksternal:
+    # networks:
+    #   - proxy-net
+
+# networks:
+#   proxy-net:
+#     external: true
